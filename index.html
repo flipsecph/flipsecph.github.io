@@ -252,39 +252,11 @@
         @media only screen and (max-width: 1000px) {}
 
         @media only screen and (max-width: 400px) {}
-
-        @media (prefers-reduced-motion: reduce) {
-
-            #updates-wrap,
-            .tags {
-                transition: none;
-            }
-
-            a#credit:hover svg,
-            .ct-spinning {
-                transform: none;
-            }
-
-            iframe.tmblr-iframe,
-            .tmblr-iframe {
-                right: 62px !important;
-                transition: none;
-            }
-        }
     </style>
 </head>
 
 <body>
 
-
-
-    <svg height="0" width="0" class="hide-it">
-        <defs>
-            <clipPath id="blob" clipPathUnits="objectBoundingBox">
-                <path d="M0.5,0.053c0.266,-0.074 0.242,0.198 0.44,0.447c0.161,0.204 -0.209,0.435 -0.44,0.455c-0.275,0.023 -0.516,-0.183 -0.471,-0.455c0.037,-0.217 0.235,-0.382 0.471,-0.447Z"></path>
-            </clipPath>
-        </defs>
-    </svg>
 
     <div>
 
@@ -293,6 +265,15 @@
 
 
                 <main id="container">
+                    <svg height="0" width="0" class="hide-it">
+                        <defs>
+                            <clipPath id="blob" clipPathUnits="objectBoundingBox">
+                                <path
+                                    d="M0.5,0.053c0.266,-0.074 0.242,0.198 0.44,0.447c0.161,0.204 -0.209,0.435 -0.44,0.455c-0.275,0.023 -0.516,-0.183 -0.471,-0.455c0.037,-0.217 0.235,-0.382 0.471,-0.447Z">
+                                </path>
+                            </clipPath>
+                        </defs>
+                    </svg>
 
                     <div id="photo-container">
                         <div id="profile-photo"></div>
