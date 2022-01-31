@@ -1,7 +1,384 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="light">
+
+<head>
+    <title>Flipse</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="#" />
+    <meta name="description" content="bio and links" />
+    <script>
+        const storedTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        if (storedTheme) document.documentElement.setAttribute("data-theme", storedTheme);
+    </script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale-subtle.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js/dist/svg-arrow.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --FontFamily: "Inter", sans-serif;
+            --FontSize: 1rem;
+            --LineHeight: 1.5rem;
+            --Edges: 0.8rem;
+            --EdgesB: 100%;
+            --Icon: 70px;
+            --IconPadding: 3px;
+            --LargeGap: 130px;
+            --ThemeGap: 40px;
+        }
+
+        :root,
+        html[data-theme="light"] {
+            --LightOn: flex;
+            --LightOff: none;
+            --ColorText: #252525;
+            --ColorLink: #b0b0b0;
+            --ColorBG: #edf5f1;
+            --ColorBGpost: #ffffff;
+            --ColorBorders: #ebebeb;
+            --ColorAccent: #cad7e3;
+            --ColorIcons: #edf5f1;
+        }
+
+        html[data-theme="dark"] {
+            --LightOn: none;
+            --LightOff: flex;
+            --ColorText: #fcfcfc;
+            --ColorLink: #747474;
+            --ColorBG: #1f2321;
+            --ColorBGpost: #181818;
+            --ColorBorders: #2b2b2b;
+            --ColorAccent: #c2def8;
+            --ColorIcons: #1f2321;
+        }
+
+        html.theme-transition,
+        html.theme-transition *,
+        html.theme-transition *:before,
+        html.theme-transition *:after {
+            transition: 0s !important;
+            transition-delay: 0 !important;
+        }
+
+        /* css resets */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        * {
+            margin: 0;
+        }
+
+        html {
+            min-height: 100vh;
+        }
+
+        body {
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::-webkit-scrollbar {
+            width: 9px;
+            background-color: var(--ColorBG);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ColorText);
+            border-radius: 4px;
+
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: var(--ColorBG);
+        }
+
+        body {
+            font-family: var(--FontFamily);
+            font-size: var(--FontSize);
+            color: var(--ColorText);
+            background-color: var(--ColorBG);
+            line-height: var(--LineHeight);
+            overflow-x: hidden;
+        }
+
+        a {
+            color: var(--ColorLink);
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--ColorAccent);
+            transition: all 0.2s ease;
+        }
+
+        svg.hide-it {
+            position: absolute;
+        }
+
+        #background {
+            background: var(--ColorBG);
+            min-height: 100vh;
+            height: 100vh;
+        }
+
+        #wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            align-content: center;
+            flex-wrap: nowrap;
+            padding: 20px;
+        }
+
+        main#container {
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 100%;
+            background-color: var(--ColorBGpost);
+            border-radius: 8px;
+        }
+
+        #photo-container {
+            width: 480px;
+            height: 480px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #profile-photo {
+            width: 480px;
+            height: 480px;
+            -webkit-clip-path: url(#blob);
+            clip-path: url("#blob");
+            background-image: url('https://static.tumblr.com/diajl5m/6Arr6j1wp/me01.jpg');
+            background-size: cover;
+            position: absolute;
+            z-index: 0;
+        }
+
+        button#theme-toggle {
+            outline: none;
+            border: 0;
+            padding: 1em;
+            cursor: pointer;
+            background-color: var(--ColorText);
+            border-radius: 100%;
+            z-index: 1;
+            margin: 65px 0 0px 73px;
+        }
+
+        button#theme-toggle svg {
+            stroke: var(--ColorIcons);
+            stroke-width: 1.5;
+            width: 2rem;
+            height: auto;
+        }
+
+        button#theme-toggle .light-on {
+            display: var(--LightOn);
+        }
+
+        button#theme-toggle .light-off {
+            display: var(--LightOff);
+        }
+
+        #pronouns {
+            display: flex;
+        }
+
+        #pronouns svg {
+            stroke: var(--ColorText);
+            stroke-width: 1.5;
+            width: 2rem;
+            height: auto;
+        }
+
+        ::-moz-selection {
+            background-color: var(--ColorAccent);
+            color: var(--ColorText);
+        }
+
+        ::selection {
+            background-color: var(--ColorAccent);
+            color: var(--ColorText);
+        }
+
+        iframe.tmblr-iframe,
+        .tmblr-iframe {
+            filter: var(--TControlsFilter);
+            z-index: -999 !important;
+            width: 0 !important;
+            top: 0 !important;
+            right: 0 !important;
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(0.75);
+            transform-origin: 100% 0;
+            transition: all 0.3s ease;
+        }
+
+        /*   tooltips */
+        .tippy-box[data-theme~='rstylr'] {
+            font-size: var(--FontSize);
+            text-align: center;
+            font-weight: 500;
+            color: var(--ColorBGpost);
+            background-color: var(--ColorText);
+            margin: 15px;
+            z-index: 10;
+        }
+
+        html {
+            /*   scrollbar moz */
+            scrollbar-width: thin;
+        }
+
+        /*  responsive css */
+        @media only screen and (max-width: 1000px) {}
+
+        @media only screen and (max-width: 400px) {}
+
+        @media (prefers-reduced-motion: reduce) {
+
+            #updates-wrap,
+            .tags {
+                transition: none;
+            }
+
+            a#credit:hover svg,
+            .ct-spinning {
+                transform: none;
+            }
+
+            iframe.tmblr-iframe,
+            .tmblr-iframe {
+                right: 62px !important;
+                transition: none;
+            }
+        }
+    </style>
+</head>
+
 <body>
-<h1>Hello World</h1>
-<p>I'm hosted with GitHub Pages.</p>
+
+
+
+    <svg height="0" width="0" class="hide-it">
+        <defs>
+            <clipPath id="blob" clipPathUnits="objectBoundingBox">
+                <path d="M0.5,0.053c0.266,-0.074 0.242,0.198 0.44,0.447c0.161,0.204 -0.209,0.435 -0.44,0.455c-0.275,0.023 -0.516,-0.183 -0.471,-0.455c0.037,-0.217 0.235,-0.382 0.471,-0.447Z"></path>
+            </clipPath>
+        </defs>
+    </svg>
+
+    <div>
+
+        <div id="background">
+            <div id="wrapper">
+
+
+                <main id="container">
+
+                    <div id="photo-container">
+                        <div id="profile-photo"></div>
+
+                        <button id="theme-toggle" aria-label="toggle dark mode" type="button">
+                            <span class="light-on" data-tippy-content="toggle dark mode">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12.0001 7.88989L10.9301 9.74989C10.6901 10.1599 10.8901 10.4999 11.3601 10.4999H12.6301C13.1101 10.4999 13.3001 10.8399 13.0601 11.2499L12.0001 13.1099"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M8.30011 18.0399V16.8799C6.00011 15.4899 4.11011 12.7799 4.11011 9.89993C4.11011 4.94993 8.66011 1.06993 13.8001 2.18993C16.0601 2.68993 18.0401 4.18993 19.0701 6.25993C21.1601 10.4599 18.9601 14.9199 15.7301 16.8699V18.0299C15.7301 18.3199 15.8401 18.9899 14.7701 18.9899H9.26011C8.16011 18.9999 8.30011 18.5699 8.30011 18.0399Z"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <span class="light-off" data-tippy-content="toggle light mode">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M20.0299 2.47998L4.17993 18.33" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M5.25008 12.9999C4.83008 12.0299 4.58008 10.9799 4.58008 9.89993C4.58008 4.98993 8.80008 1.11993 13.6001 2.16993C15.0601 2.48993 16.3601 3.26993 17.3601 4.34993"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path
+                                        d="M19.0599 7.30005C20.2799 11.18 18.3099 15.08 15.5199 16.87V18.03C15.5199 18.32 15.6199 18.99 14.6199 18.99H9.41991C8.38991 18.99 8.51991 18.56 8.51991 18.03V16.87C8.03991 16.57 7.58991 16.2 7.15991 15.77"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                        </button>
+
+
+                    </div>
+
+                    <div id="text-container">
+                        <div id="pronouns">
+                            <span>she/her</span>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16Z" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M12 16V22" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15 19H9" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+
+                        </div>
+
+                        <div id="bio">
+                            <strong>Flipse</strong>&nbsp;<em>[flips • eh]</em>&nbsp;is a ridiculously passionate music-nerd and concert enthusiast, based in Copenhagen Denmark. Likes aesthetics,
+                            Doctor Who, and surfing. Bisexual, feminist, Chaotic good. She/her.
+                        </div>
+                    </div>
+
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script>
+        tippy("[data-tippy-content]", {
+            theme: "rstylr",
+            arrow: false,
+            animation: "scale-subtle",
+            followCursor: true,
+            placement: "top",
+            touch: false,
+        });
+
+        const toggle = document.getElementById("theme-toggle");
+
+        toggle.onclick = function () {
+            document.documentElement.classList.add("theme-transition");
+
+            let currentTheme = document.documentElement.getAttribute("data-theme");
+            let targetTheme = "light";
+
+            if (currentTheme === "light") {
+                targetTheme = "dark";
+            }
+
+            window.setTimeout(function () {
+                document.documentElement.classList.remove("theme-transition");
+            }, 50);
+
+            document.documentElement.setAttribute("data-theme", targetTheme);
+            localStorage.setItem("theme", targetTheme);
+        };
+    </script>
 </body>
+
 </html>
