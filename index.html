@@ -2,7 +2,7 @@
 <html lang="en" data-theme="light">
 
 <head>
-    <title>Flipse</title>
+    <title>Hi, I'm Flipse.</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="shortcut icon" href="#" />
@@ -11,22 +11,19 @@
         const storedTheme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
         if (storedTheme) document.documentElement.setAttribute("data-theme", storedTheme);
     </script>
+
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale-subtle.css" />
     <link rel="stylesheet" href="https://unpkg.com/tippy.js/dist/svg-arrow.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --FontFamily: "Inter", sans-serif;
             --FontSize: 1rem;
-            --LineHeight: 1.5rem;
-            --Edges: 0.8rem;
-            --EdgesB: 100%;
-            --Icon: 70px;
-            --IconPadding: 3px;
-            --LargeGap: 130px;
-            --ThemeGap: 40px;
+            --LineHeight: 1.6rem;
+            --Photo: 420px;
         }
 
         :root,
@@ -34,12 +31,12 @@
             --LightOn: flex;
             --LightOff: none;
             --ColorText: #252525;
-            --ColorLink: #b0b0b0;
-            --ColorBG: #edf5f1;
-            --ColorBGpost: #ffffff;
-            --ColorBorders: #ebebeb;
-            --ColorAccent: #cad7e3;
-            --ColorIcons: #edf5f1;
+            --ColorLink: #252525;
+            --ColorHover: #95bcc1;
+            --ColorBG: #ffffff;
+            --ColorAccent: #e0ede6;
+            --ColorAccent2: #b6c3aa;
+            --ColorBorders: #e2e2e2;
         }
 
         html[data-theme="dark"] {
@@ -47,11 +44,11 @@
             --LightOff: flex;
             --ColorText: #fcfcfc;
             --ColorLink: #747474;
-            --ColorBG: #1f2321;
-            --ColorBGpost: #181818;
-            --ColorBorders: #2b2b2b;
-            --ColorAccent: #c2def8;
-            --ColorIcons: #1f2321;
+            --ColorHover: #52899e;
+            --ColorBG: #181818;
+            --ColorAccent: #40504d;
+            --ColorAccent2: #4c5642;
+            --ColorBorders: #363636;
         }
 
         html.theme-transition,
@@ -89,7 +86,7 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--ColorText);
+            background: var(--ColorAccent);
             border-radius: 4px;
 
         }
@@ -103,18 +100,21 @@
             font-size: var(--FontSize);
             color: var(--ColorText);
             background-color: var(--ColorBG);
-            line-height: var(--LineHeight);
+            line-height: 1;
             overflow-x: hidden;
         }
 
         a {
             color: var(--ColorLink);
+            font-weight: 500;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--ColorBorders);
             text-decoration: none;
             transition: all 0.2s ease;
         }
 
         a:hover {
-            color: var(--ColorAccent);
+            color: var(--ColorHover);
             transition: all 0.2s ease;
         }
 
@@ -123,69 +123,61 @@
         }
 
         #background {
-            background: var(--ColorBG);
             min-height: 100vh;
-            height: 100vh;
-        }
-
-        #wrapper {
-            width: 100%;
-            height: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             align-items: center;
             align-content: center;
             flex-wrap: nowrap;
-            padding: 20px;
         }
 
         main#container {
             margin: auto;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             width: 100%;
             min-height: 100%;
-            background-color: var(--ColorBGpost);
+            background-color: var(--ColorBG);
             border-radius: 8px;
+            justify-content: center;
+            align-items: center;
         }
 
-        #photo-container {
-            width: 480px;
-            height: 480px;
+        section#content {
             display: flex;
+            gap: 0;
             flex-direction: column;
-            align-items: flex-start;
+            width: 600px;
+            align-items: baseline;
+            flex-wrap: nowrap;
         }
 
-        #profile-photo {
-            width: 480px;
-            height: 480px;
+        img#profile-photo {
+            width: var(--Photo);
+            height: var(--Photo);
+            margin: 0 auto;
             -webkit-clip-path: url(#blob);
             clip-path: url("#blob");
-            background-image: url('https://static.tumblr.com/diajl5m/6Arr6j1wp/me01.jpg');
-            background-size: cover;
-            position: absolute;
             z-index: 0;
+            image-rendering: -webkit-optimize-contrast;
         }
 
         button#theme-toggle {
             outline: none;
             border: 0;
-            padding: 1em;
+            padding: 12px;
             cursor: pointer;
             background-color: var(--ColorText);
             border-radius: 100%;
             z-index: 1;
-            margin: 65px 0 0px 73px;
+            margin: 106px 135px -160px auto;
         }
 
         button#theme-toggle svg {
-            stroke: var(--ColorIcons);
+            stroke: var(--ColorBG);
             stroke-width: 1.5;
-            width: 2rem;
+            width: 30px;
             height: auto;
         }
 
@@ -198,23 +190,74 @@
         }
 
         #pronouns {
-            display: flex;
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+            color: var(--ColorText);
+            background-color: var(--ColorAccent);
+            padding: 10px 10px;
+            border-radius: 11px;
+            margin: -100px 0px 56px 90px;
+            z-index: 1;
+            transform: rotate(-16deg);
+            transition: all 0.2s ease;
+            font-weight: 600;
+            font-size: calc(var(--FontSize) - 1px);
+        }
+
+        #pronouns:hover {
+            transform: rotate(-10deg);
         }
 
         #pronouns svg {
             stroke: var(--ColorText);
-            stroke-width: 1.5;
-            width: 2rem;
-            height: auto;
+            stroke-width: 1.7;
+            width: 24px;
+            height: 24px;
+        }
+
+        #bio {
+            line-height: var(--LineHeight);
+            display: flex;
+            gap: 2rem;
+            flex-direction: column;
+        }
+
+        strong {
+            font-weight: 600;
+        }
+
+        span#pronounce {
+            font-family: 'Fira Code', monospace;
+        }
+
+
+
+        #bio svg {
+            height: calc(var(--FontSize) + 0.1rem);
+            display: inline-block;
+            vertical-align: middle;
+            fill: var(--ColorText);
+        }
+
+        #findme span {
+            font-size: var(--FontSize);
+            display: inline-block;
+            margin-right: 20px;
+            font-weight: 700;
+        }
+
+        footer {
+            margin-bottom: 1rem;
         }
 
         ::-moz-selection {
-            background-color: var(--ColorAccent);
+            background-color: var(--ColorAccent2);
             color: var(--ColorText);
         }
 
         ::selection {
-            background-color: var(--ColorAccent);
+            background-color: var(--ColorAccent2);
             color: var(--ColorText);
         }
 
@@ -237,7 +280,7 @@
             font-size: var(--FontSize);
             text-align: center;
             font-weight: 500;
-            color: var(--ColorBGpost);
+            color: var(--ColorBG);
             background-color: var(--ColorText);
             margin: 15px;
             z-index: 10;
@@ -249,7 +292,32 @@
         }
 
         /*  responsive css */
-        @media only screen and (max-width: 1000px) {}
+        @media only screen and (max-width: 640px) {
+            section#content {
+                display: flex;
+                gap: 30px;
+                flex-direction: column;
+                flex-wrap: nowrap;
+                width: 80%;
+                align-content: center;
+                align-items: center;
+            }
+
+            img#profile-photo {
+                width: 90%;
+                margin: 0 auto;
+                height: auto;
+            }
+
+            #pronouns {
+                margin: -100px auto 56px 10%;
+            }
+
+            #findme span {
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
 
         @media only screen and (max-width: 400px) {}
     </style>
@@ -257,76 +325,102 @@
 
 <body>
 
+    <svg height="0" width="0" class="hide-it">
+        <defs>
+            <clipPath id="blob" clipPathUnits="objectBoundingBox">
+                <path d="M0.5,0.053c0.266,-0.074 0.242,0.198 0.44,0.447c0.161,0.204 -0.209,0.435 -0.44,0.455c-0.275,0.023 -0.516,-0.183 -0.471,-0.455c0.037,-0.217 0.235,-0.382 0.471,-0.447Z"></path>
+            </clipPath>
+        </defs>
+    </svg>
 
-    <div>
-
-        <div id="background">
-            <div id="wrapper">
 
 
-                <main id="container">
-                    <svg height="0" width="0" class="hide-it">
-                        <defs>
-                            <clipPath id="blob" clipPathUnits="objectBoundingBox">
-                                <path
-                                    d="M0.5,0.053c0.266,-0.074 0.242,0.198 0.44,0.447c0.161,0.204 -0.209,0.435 -0.44,0.455c-0.275,0.023 -0.516,-0.183 -0.471,-0.455c0.037,-0.217 0.235,-0.382 0.471,-0.447Z">
-                                </path>
-                            </clipPath>
-                        </defs>
+    <div id="background">
+
+        <main id="container">
+
+            <section id="content">
+
+                <button id="theme-toggle" aria-label="toggle dark mode" type="button">
+                    <span class="light-on" data-tippy-content="toggle dark mode">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M12.0001 7.88989L10.9301 9.74989C10.6901 10.1599 10.8901 10.4999 11.3601 10.4999H12.6301C13.1101 10.4999 13.3001 10.8399 13.0601 11.2499L12.0001 13.1099"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M8.30011 18.0399V16.8799C6.00011 15.4899 4.11011 12.7799 4.11011 9.89993C4.11011 4.94993 8.66011 1.06993 13.8001 2.18993C16.0601 2.68993 18.0401 4.18993 19.0701 6.25993C21.1601 10.4599 18.9601 14.9199 15.7301 16.8699V18.0299C15.7301 18.3199 15.8401 18.9899 14.7701 18.9899H9.26011C8.16011 18.9999 8.30011 18.5699 8.30011 18.0399Z"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                    <span class="light-off" data-tippy-content="toggle light mode">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M20.0299 2.47998L4.17993 18.33" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M5.25008 12.9999C4.83008 12.0299 4.58008 10.9799 4.58008 9.89993C4.58008 4.98993 8.80008 1.11993 13.6001 2.16993C15.0601 2.48993 16.3601 3.26993 17.3601 4.34993"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path
+                                d="M19.0599 7.30005C20.2799 11.18 18.3099 15.08 15.5199 16.87V18.03C15.5199 18.32 15.6199 18.99 14.6199 18.99H9.41991C8.38991 18.99 8.51991 18.56 8.51991 18.03V16.87C8.03991 16.57 7.58991 16.2 7.15991 15.77"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </span>
+                </button>
+                <img id="profile-photo" src="https://static.tumblr.com/diajl5m/6Arr6j1wp/me01.jpg">
+                <div id="pronouns">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16Z" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M12 16V22" stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M15 19H9" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
+                    <span>she/her</span>
+                </div>
 
-                    <div id="photo-container">
-                        <div id="profile-photo"></div>
 
-                        <button id="theme-toggle" aria-label="toggle dark mode" type="button">
-                            <span class="light-on" data-tippy-content="toggle dark mode">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M12.0001 7.88989L10.9301 9.74989C10.6901 10.1599 10.8901 10.4999 11.3601 10.4999H12.6301C13.1101 10.4999 13.3001 10.8399 13.0601 11.2499L12.0001 13.1099"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path
-                                        d="M8.30011 18.0399V16.8799C6.00011 15.4899 4.11011 12.7799 4.11011 9.89993C4.11011 4.94993 8.66011 1.06993 13.8001 2.18993C16.0601 2.68993 18.0401 4.18993 19.0701 6.25993C21.1601 10.4599 18.9601 14.9199 15.7301 16.8699V18.0299C15.7301 18.3199 15.8401 18.9899 14.7701 18.9899H9.26011C8.16011 18.9999 8.30011 18.5699 8.30011 18.0399Z"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                            <span class="light-off" data-tippy-content="toggle light mode">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M20.0299 2.47998L4.17993 18.33" stroke-linecap="round" stroke-linejoin="round" />
-                                    <path
-                                        d="M5.25008 12.9999C4.83008 12.0299 4.58008 10.9799 4.58008 9.89993C4.58008 4.98993 8.80008 1.11993 13.6001 2.16993C15.0601 2.48993 16.3601 3.26993 17.3601 4.34993"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path
-                                        d="M19.0599 7.30005C20.2799 11.18 18.3099 15.08 15.5199 16.87V18.03C15.5199 18.32 15.6199 18.99 14.6199 18.99H9.41991C8.38991 18.99 8.51991 18.56 8.51991 18.03V16.87C8.03991 16.57 7.58991 16.2 7.15991 15.77"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                    <path d="M8.5 22C10.79 21.35 13.21 21.35 15.5 22" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </span>
-                        </button>
+
+
+                <div id="bio">
+                    <div id="intro"><strong>Flipse</strong> <span id="pronounce"><strong>[</strong>flips&#183;eh<strong>]</strong></span> is a ridiculously passionate music-nerd and concert
+                        enthusiast, based in
+                        Copenhagen Denmark. Likes everything space<svg enable-background="new 0 0 128 128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="m121.59 60.83-13.93-4.49c-8.91-2.94-14.13-10.15-16.58-19.21l-6.13-29.86c-.16-.59-.55-1.38-1.75-1.38-1.01 0-1.59.79-1.75 1.38l-6.13 29.87c-2.46 9.06-7.67 16.27-16.58 19.21l-13.93 4.49c-1.97.64-2 3.42-.04 4.09l14.03 4.83c8.88 2.95 14.06 10.15 16.52 19.17l6.14 29.53c.16.59.49 1.65 1.75 1.65 1.33 0 1.59-1.06 1.75-1.65l6.14-29.53c2.46-9.03 7.64-16.23 16.52-19.17l14.03-4.83c1.94-.68 1.91-3.46-.06-4.1z">
+                            </path>
+                            <path
+                                d="m122.91 62.08c-.22-.55-.65-1.03-1.32-1.25l-13.93-4.49c-8.91-2.94-14.13-10.15-16.58-19.21l-6.13-29.86c-.09-.34-.41-.96-.78-1.14l1.98 29.97c1.47 13.68 2.73 20.12 13.65 22 9.38 1.62 20.23 3.48 23.11 3.98z">
+                            </path>
+                            <path
+                                d="m122.94 63.64-24.16 5.54c-8.51 2.16-13.2 7.09-13.2 19.99l-2.37 30.94c.81-.08 1.47-.52 1.75-1.65l6.14-29.53c2.46-9.03 7.64-16.23 16.52-19.17l14.03-4.83c.66-.24 1.08-.73 1.29-1.29z">
+                            </path>
+                            <path
+                                d="m41.81 86.81c-8.33-2.75-9.09-5.85-10.49-11.08l-3.49-12.24c-.21-.79-2.27-.79-2.49 0l-2.37 11.31c-1.41 5.21-4.41 9.35-9.53 11.04l-8.16 3.54c-1.13.37-1.15 1.97-.02 2.35l8.22 2.91c5.1 1.69 8.08 5.83 9.5 11.02l2.37 10.82c.22.79 2.27.79 2.48 0l2.78-10.77c1.41-5.22 3.57-9.37 10.5-11.07l7.72-2.91c1.13-.39 1.12-1.99-.02-2.36z">
+                            </path>
+                            <path
+                                d="m28.49 75.55c.85 7.86 1.28 10.04 7.65 11.67l13.27 2.59c-.14-.19-.34-.35-.61-.43l-7-2.57c-7.31-2.5-9.33-5.68-10.7-12.04s-2.83-10.51-2.83-10.51c-.51-1.37-1.24-1.3-1.24-1.3z">
+                            </path>
+                            <g>
+                                <path
+                                    d="m28.73 102.99c0-7.41 4.05-11.08 10.49-11.08l10.02-.41s-.58.77-1.59 1.01l-6.54 2.13c-5.55 2.23-8.08 3.35-9.8 10.94 0 0-2.22 8.83-2.64 9.76-.58 1.3-1.27 1.57-1.27 1.57z">
+                                </path>
+                                <path
+                                    d="m59.74 28.14c.56-.19.54-.99-.03-1.15l-7.72-2.08c-1.62-.44-2.88-1.69-3.34-3.3l-3.04-12.55c-.15-.61-1.02-.61-1.17.01l-2.86 12.5c-.44 1.66-1.74 2.94-3.4 3.37l-7.67 1.99c-.57.15-.61.95-.05 1.15l8.09 2.8c1.45.5 2.57 1.68 3.01 3.15l2.89 11.59c.15.6 1.01.61 1.16 0l2.99-11.63c.45-1.47 1.58-2.64 3.04-3.13z"
+                                    stroke-miterlimit="10"></path>
+                            </g>
+                        </svg> and Doctor Who. Bisexual feminist, with a chaotic good energy.
+                    </div>
+                    <div id="findme">
+                        <span>You can find me at:</span>
+                        <a target="_blank" href="https://twitter.com/flipsecph">Twitter</a>,
+                        <a target="_blank" href="https://www.instagram.com/flipse.cph/">Instagram</a> and
+                        <a target="_blank" href="https://open.spotify.com/user/karmaflipse">Spotify</a>.
 
 
                     </div>
+                </div>
 
-                    <div id="text-container">
-                        <div id="pronouns">
-                            <span>she/her</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 16C15.866 16 19 12.866 19 9C19 5.13401 15.866 2 12 2C8.13401 2 5 5.13401 5 9C5 12.866 8.13401 16 12 16Z" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M12 16V22" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M15 19H9" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-
-                        </div>
-
-                        <div id="bio">
-                            <strong>Flipse</strong>&nbsp;<em>[flips • eh]</em>&nbsp;is a ridiculously passionate music-nerd and concert enthusiast, based in Copenhagen Denmark. Likes aesthetics,
-                            Doctor Who, and surfing. Bisexual, feminist, Chaotic good. She/her.
-                        </div>
-                    </div>
-
-                </main>
-            </div>
-        </div>
+            </section>
+        </main>
+        <footer>Made with *rocks*</footer>
     </div>
+
 
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
